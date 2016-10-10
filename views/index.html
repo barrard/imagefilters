@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/styles/app.css">
+	<title>INDEX</title>
+</head>
+<body>
+	This one test
+
+<!-- 
+	<form name='nameMessage'action="/index" method='post'>
+		name <input type="text" name='name'>
+		message <input type="text" name='message'>
+		submit <input type="submit" name='sendMessage'>
+	</form> -->
+	<style>
+.box{
+	height: 25px;
+	width:25px;
+	background-color: green;
+	/*filter:blur(2px);*/
+	/*box-shadow: 0em 0em 5em green;*/
+
+}
+.right{
+	float: right;
+}
+
+.left{
+	float: left;
+}
+
+
+	</style>
+	<div class="left">
+		<div>
+			<input id='blurRange' type="range" min='0' max='30' step='1'>
+			<br>
+			blur <span id='blurVal'></span><div class="blur box"></div>
+		</div>
+		<div>
+			<input id='grayRange' type="range" min='0' max='100' step='1'>
+			<br>
+			Gray Scale <span id='grayVal'></span><div class="grayScale box"></div>
+		</div>
+		<div>
+			<input id='sepiaRange' type="range" min='0' max='100' step='1'>
+			<br>
+			Sepia <span id='sepiaVal'></span><div class="sepia box"></div>
+		</div>
+		<div>
+			<input id='saturateRange' type="range" min='0' max='500' step='1'>
+			<br>
+			saturate <span id='saturateVal'></span><div class="saturate box"></div>
+		</div>
+		<div>
+			<input id='hueRange' type="range" min='0' max='360' step='1'>
+			<br>
+			Hue-Rotate <span id='hueVal'></span><div class="hue box"></div>
+		</div>
+		<div>
+			<input id='invertRange' type="range" min='0' max='100' step='1'>
+			<br>
+			Invert <span id='invertVal'></span><div class="invert box"></div>
+		</div>
+		<div>
+			<input id='opacityRange' type="range" min='0' max='100' step='1'>
+			<br>
+			Opacity  <span id='opacityVal'></span><div class="opacity box"></div>
+		</div>
+		<div>
+			<input id='brightnessRange' type="range" min='0' max='500' step='1'>
+			<br>
+			Brightness  <span id='brightnessVal'></span><div class="brightness box"></div>
+		</div>
+		<div>
+			<input id='contrastRange' type="range" min='0' max='700' step='1'>
+			<br>
+			contrast  <span id='contrastVal'></span><div class="contrast box"></div>
+		</div>
+	</div>
+
+	<img id='picturePreview'class='right'src="./myPIC.jpg" alt="myPic" width="" height='500'>
+
+	<br>
+	<br>
+
+	<form name = 'filePost' method='post' enctype="multipart/form-data">
+		file <input name = 'file'  type="file" multiple>
+		submit <input type="submit" name='uploadFile' value ='submit'>
+	</form>
+	<script src="../js/jquery.js"></script>
+<script>
+
+var contrast,
+	brightness,
+	opacity,
+	invert,
+	hue,
+	saturate,
+	sepia,
+	grayScale,
+	blurr
+
+	var filterPropertiesObj=
+	{
+	contrast: function(){
+		var propValue = $('#contrastRange').val()},
+	brightness:function(){
+		return $('#brightnessRange').val()},
+	opacity:function(){
+		return $('#opacityRange').val()},
+	invert:function(){
+		return $('#invertRange').val()},
+	hue:function(){
+		return $('#hueRange').val()},
+	saturate:function(){
+		return $('#saturateRange').val()},
+	sepia:function(){
+		return $('#sepiaRange').val()},
+	grayScale:function(){
+		return $('#grayRange').val()},
+	blurr:function(){
+		return $('#blurRange').val()}
+	}
+
+var filterProperties=[]
+	// [contrast,
+	// brightness,
+	// opacity,
+	// invert,
+	// hue,
+	// saturate,
+	// sepia,
+	// sepia,
+	// blurr]
+
+
+$('#contrastRange').val(100)
+$('#contrastRange').on('change input', function(){
+	 contrast = $('#contrastRange').val()
+	$('.contrast').css('filter', 'contrast('+contrast+'%)')
+	$('#contrastVal').html(contrast)
+	contrast='contrast('+contrast+'%)'
+	filterProperties[0]=contrast
+
+})
+
+
+$('#brightnessRange').val(100)
+$('#brightnessRange').on('change input', function(){
+	var brightness = $('#brightnessRange').val()
+	$('.brightness').css('filter', 'brightness('+brightness+'%)')
+	$('#brightnessVal').html(brightness)
+	brightness='brightness('+brightness+'%)'
+	filterProperties[1]=brightness
+
+})
+
+$('#opacityRange').val(100)
+$('#opacityRange').on('change input', function(){
+	var opacity = $('#opacityRange').val()
+	$('.opacity').css('filter', 'opacity('+opacity+'%)')
+	$('#opacityVal').html(opacity)
+	opacity='opacity('+opacity+'%)'
+	filterProperties[2]=opacity
+
+})
+
+
+$('#invertRange').val(0)
+$('#invertRange').on('change input', function(){
+	var invert = $('#invertRange').val()
+	$('.invert').css('filter', 'invert('+invert+'%)')
+	$('#invertVal').html(invert)
+	invert='invert('+invert+'%)'
+	filterProperties[3]=invert
+
+})
+
+$('#hueRange').val(0)
+$('#hueRange').on('change input', function(){
+	var hue = $('#hueRange').val()
+	$('.hue').css('filter', 'hue-rotate('+hue+'deg)')
+	$('#hueVal').html(hue)
+	hue='hue-rotate('+hue+'deg)'
+	filterProperties[4]=hue
+
+})
+
+$('#saturateRange').val(0)
+$('#saturateRange').on('change input', function(){
+	var saturate = $('#saturateRange').val()
+	$('.saturate').css('filter', 'saturate('+saturate+'%)')
+	$('#saturateVal').html(saturate)
+	saturate='saturate('+saturate+'%)'
+	filterProperties[5]=saturate
+
+})
+
+$('#sepiaRange').val(0)
+$('#sepiaRange').on('change input', function(){
+	var sepia = $('#sepiaRange').val()
+	$('.sepia').css('filter', 'sepia('+sepia+'%)')
+	$('#sepiaVal').html(sepia)
+	sepia='sepia('+sepia+'%)'
+	filterProperties[6]=sepia
+
+})
+
+$('#grayRange').val(0)
+$('#grayRange').on('change input', function(){
+	var grayScale = $('#grayRange').val()
+	$('.grayScale').css('filter', 'grayscale('+grayScale+'%)')
+	$('#grayVal').html(grayScale)
+	grayScale='grayscale('+grayScale+'%)'
+	filterProperties[7]=grayScale
+
+})
+
+
+$('#blurRange').val(0)
+$('#blurRange').on('change input', function(){
+	var blurr = $('#blurRange').val()
+	$('.blur').css('filter', 'blur('+blurr+'px)')
+	$('#blurVal').html(blurr)
+	blurr='blur('+blurr+'px)'
+	filterProperties[8]=blurr
+
+	// $('.LED').animate({
+	// 	filter:'blur('+200+'px)',
+	// 	height:100
+	// }, 500, function(){
+	// 	console.log('Animatiuon!');
+	// })
+
+})
+
+$('input[type="range"]').on('change input', function(){
+	var tags ='';
+	for(var x = 0; x<filterProperties.length;x++){
+	if(typeof filterProperties[x]!=='undefined'){
+	  tags += filterProperties[x]
+	  }  
+	}
+	$('#picturePreview').css('filter', tags)
+	console.log(tags);
+})
+
+
+
+
+
+
+
+	$('form[name = filePost]').submit(function(e){
+		// e.preventDefault()
+		console.log('Form submit files are....');
+$.post('/index', function(data){
+	console.log(data);
+})
+
+
+		var formData = new FormData($(this)[0])
+		console.log(formData);
+
+		
+
+
+
+	})
+</script>
+</body>
+</html>
