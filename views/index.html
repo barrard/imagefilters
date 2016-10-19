@@ -3,96 +3,177 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="/styles/app.css">
+	<link rel="stylesheet" href="/styles/myGridCore.css">
+	<link rel="stylesheet" href="/styles/myGridUtil.css">
 	<title>INDEX</title>
 </head>
 <body>
-	This one test
 
-<!-- 
-	<form name='nameMessage'action="/index" method='post'>
-		name <input type="text" name='name'>
-		message <input type="text" name='message'>
-		submit <input type="submit" name='sendMessage'>
-	</form> -->
-	<style>
-.box{
-	height: 25px;
-	width:25px;
-	background-color: green;
-	/*filter:blur(2px);*/
-	/*box-shadow: 0em 0em 5em green;*/
-
-}
-.right{
-	float: right;
-}
-
-.left{
-	float: left;
-}
+<div class="row wrap start">
+	
 
 
-	</style>
-	<div class="left">
-		<div>
-			<input id='blurRange' type="range" min='0' max='30' step='1'>
-			<br>
-			blur <span id='blurVal'></span><div class="blur box"></div>
+
+		<div class="col md-medium md-no-grow  lg-small">
+			<div class="row">
+				
+					
+					<label for="">blur</label> <span id='blurVal'></span>
+					<div class="blur box "></div>
+					<div class="decreaseBtn"></div>
+					<input id='blurRange' type="range" min='0' max='30' step='1'>		
+					<div class="increaseBtn"></div>
+
+			
+			</div>
+			<div class="row">
+				Gray Scale <span id='grayVal'></span>
+				<div class="grayScale box"></div>
+				<div class="decreaseBtn"></div>
+				<input id='grayRange' type="range" min='0' max='100' step='1'>
+				<div class="increaseBtn"></div>
+			</div>
+			<div class="row">
+				Sepia <span id='sepiaVal'></span>
+				<div class="sepia box"></div>
+				<div class="decreaseBtn"></div>
+				<input id='sepiaRange' type="range" min='0' max='100' step='1'>
+				<div class="increaseBtn"></div>
+			</div>
+			<div class="row">
+				saturate <span id='saturateVal'></span>
+				<div class="saturate box"></div>
+				<div class="decreaseBtn"></div>
+				<input id='saturateRange' type="range" min='0' max='500' step='1'>
+				<div class="increaseBtn"></div>
+			</div>
+			<div class="row">
+				Hue-Rotate <span id='hueVal'></span>
+				<div class="hue box"></div>
+				<div class="decreaseBtn"></div>
+				<input id='hueRange' type="range" min='0' max='360' step='1'>
+				<div class="increaseBtn"></div>
+			</div>
+			<div class="row">
+				Invert <span id='invertVal'></span>
+				<div class="invert box"></div>
+				<div class="decreaseBtn"></div>
+				<input id='invertRange' type="range" min='0' max='100' step='1'>
+				<div class="increaseBtn"></div>
+			</div>
+			<div class="row">
+				Opacity  <span id='opacityVal'></span>
+				<div class="opacity box"></div>
+				<div class="decreaseBtn"></div>
+				<input id='opacityRange' type="range" min='0' max='100' step='1'>
+				<div class="increaseBtn"></div>
+			</div>
+			<div class="row">
+				Brightness  <span id='brightnessVal'></span>
+				<div class="brightness box"></div>
+				<div class="decreaseBtn"></div>
+				<input id='brightnessRange' type="range" min='0' max='500' step='1'>
+				<div class="increaseBtn"></div>
+			</div>
+			<div class="row">
+				contrast  <span id='contrastVal'></span>
+				<div class="contrast box"></div>
+				<div class="decreaseBtn"></div>
+				<input id='contrastRange' type="range" min='0' max='700' step='1'>
+				<div class="increaseBtn"></div>
+			</div>
+
 		</div>
-		<div>
-			<input id='grayRange' type="range" min='0' max='100' step='1'>
-			<br>
-			Gray Scale <span id='grayVal'></span><div class="grayScale box"></div>
+
+		<div class="col md-medium lg-large">
+		<img id='picturePreview'class='row'src="./myPIC.jpg" alt="myPic" width="" height='' style=';'>
+			<canvas id='picturePreviewCanvas'>
+				
+			</canvas>
 		</div>
-		<div>
-			<input id='sepiaRange' type="range" min='0' max='100' step='1'>
-			<br>
-			Sepia <span id='sepiaVal'></span><div class="sepia box"></div>
-		</div>
-		<div>
-			<input id='saturateRange' type="range" min='0' max='500' step='1'>
-			<br>
-			saturate <span id='saturateVal'></span><div class="saturate box"></div>
-		</div>
-		<div>
-			<input id='hueRange' type="range" min='0' max='360' step='1'>
-			<br>
-			Hue-Rotate <span id='hueVal'></span><div class="hue box"></div>
-		</div>
-		<div>
-			<input id='invertRange' type="range" min='0' max='100' step='1'>
-			<br>
-			Invert <span id='invertVal'></span><div class="invert box"></div>
-		</div>
-		<div>
-			<input id='opacityRange' type="range" min='0' max='100' step='1'>
-			<br>
-			Opacity  <span id='opacityVal'></span><div class="opacity box"></div>
-		</div>
-		<div>
-			<input id='brightnessRange' type="range" min='0' max='500' step='1'>
-			<br>
-			Brightness  <span id='brightnessVal'></span><div class="brightness box"></div>
-		</div>
-		<div>
-			<input id='contrastRange' type="range" min='0' max='700' step='1'>
-			<br>
-			contrast  <span id='contrastVal'></span><div class="contrast box"></div>
-		</div>
+		
+
+		<br>
+	<div class="row">
+		<canvas id="drawCanvas">
+			sorry your browser doesnt support Canvas
+		</canvas>
 	</div>
 
-	<img id='picturePreview'class='right'src="./myPIC.jpg" alt="myPic" width="" height='500'>
+		<br>
 
-	<br>
-	<br>
+		<form class='right'name='filePost' method='post' enctype="multipart/form-data">
+			file <input name = 'file'  type="file" multiple>
+			submit <input type="submit" name='uploadFile' value ='submit'>
+		</form>
 
-	<form name = 'filePost' method='post' enctype="multipart/form-data">
-		file <input name = 'file'  type="file" multiple>
-		submit <input type="submit" name='uploadFile' value ='submit'>
+
+	<form action=""method='' enctype='multipart/form-data'>
+		what do you like to upload <input type="file" id='previewImgInput' multiple onchange="handleFiles(this.files)">
 	</form>
+	<img src="myPIC.jpg" hright="100" width='100' alt="" class="uploadPreview">
+
+
+
+
+
+
+
+
+
+</div>
+
 	<script src="../js/jquery.js"></script>
+	<script src="../js/touchSlide.js"></script>
+	<script src="../js/canvas.js"></script>
+	<script src="../js/pictureCanvas.js"></script>
 <script>
 
+
+
+
+
+
+
+
+// $('#picturePreview').on('dragend', function(e){
+// 	mousedown = false
+
+
+// $('#picturePreview').on('drop', function(e){
+// 	mousedown = false
+// 	$('#picturePreview').off('mousemove')
+// 	console.log(e);
+// 	console.log('DROP');
+// })
+
+
+$('.decreaseBtn').on('click', function(e){
+	var target = e.target
+	console.log(e);
+	console.log(target);
+	console.log(target.parentNode);
+	console.log(target.parentNode.children);
+	var children = target.parentNode.children
+	console.log(children.length);
+	for(var x = 0; x<children.length;x++){
+		if(children[x].localName==='input'){
+			console.log(children[x].id);
+		}
+	}
+})
+
+
+
+
+var filesArrayBlobs = []
+function handleFiles(files){
+	console.log(files);
+	for(var x = 0;x<files.length;x++){
+		filesArrayBlobs.push(window.URL.createObjectURL(files[x]))
+		$('body').append('<img class="uploadPreview" src="'+filesArrayBlobs[x]+'" height="100">')
+	}
+}
 var contrast,
 	brightness,
 	opacity,
@@ -124,6 +205,7 @@ var contrast,
 	blurr:function(){
 		return $('#blurRange').val()}
 	}
+	//drop-shadow
 
 var filterProperties=[]
 	// [contrast,

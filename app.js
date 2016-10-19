@@ -2,6 +2,8 @@ var http = require('http');
 var util = require('util')
 var express = require('express');
 var formidable = require('formidable')
+var compression = require('compression')
+var Jimp = require("jimp");
 const os = require('os');
 
 
@@ -11,6 +13,8 @@ app =express(http);
 
 
 app.use(express.static('client'))
+app.use(compression())
+
 
 app.post('/file', function(req, res){
 	var form = new formidable.IncomingForm()
@@ -180,6 +184,10 @@ app.get('/index', function(req, res){
 	res.sendFile(__dirname+'/views/index.html', options)
 	console.log(req.url);
 	
+})
+
+app.get('/shadow', function(req, res){
+	res.sendFile(__dirname+'/views/shadow.html')
 })
 
 

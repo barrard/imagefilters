@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<!-- saved from url=(0027)http://localhost:3333/index -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<link rel="stylesheet" href="./newpic_files/app.css">
+	<link rel="stylesheet" href="./newpic_files/myGridCore.css">
+	<link rel="stylesheet" href="./newpic_files/myGridUtil.css">
+	<title>INDEX</title>
+</head>
+<body>
+
+<!-- 	<form name='nameMessage'action="/index" method='post'>
+		name <input type="text" name='name'>
+		message <input type="text" name='message'>
+		submit <input type="submit" name='sendMessage'>
+	</form> -->
+	<div class="row">
+		<div class="col-s-large">
+			<div>
+				
+				<label for="">blur</label> <span id="blurVal"></span>
+				<div class="blur box"></div>
+				<div class="decreaseBtn"></div>
+				<input id="blurRange" type="range" min="0" max="30" step="1">		
+				<div class="increaseBtn"></div>
+
+			</div>
+			<div>
+				Gray Scale <span id="grayVal"></span>
+				<div class="grayScale box"></div>
+				<div class="decreaseBtn"></div>
+				<input id="grayRange" type="range" min="0" max="100" step="1">
+				<div class="increaseBtn"></div>
+			</div>
+			<div>
+				Sepia <span id="sepiaVal"></span>
+				<div class="sepia box"></div>
+				<div class="decreaseBtn"></div>
+				<input id="sepiaRange" type="range" min="0" max="100" step="1">
+				<div class="increaseBtn"></div>
+			</div>
+			<div>
+				saturate <span id="saturateVal">456</span>
+				<div class="saturate box" style="filter: saturate(456%);"></div>
+				<div class="decreaseBtn"></div>
+				<input id="saturateRange" type="range" min="0" max="500" step="1">
+				<div class="increaseBtn"></div>
+			</div>
+			<div>
+				Hue-Rotate <span id="hueVal">316</span>
+				<div class="hue box" style="filter: hue-rotate(316deg);"></div>
+				<div class="decreaseBtn"></div>
+				<input id="hueRange" type="range" min="0" max="360" step="1">
+				<div class="increaseBtn"></div>
+			</div>
+			<div>
+				Invert <span id="invertVal"></span>
+				<div class="invert box"></div>
+				<div class="decreaseBtn"></div>
+				<input id="invertRange" type="range" min="0" max="100" step="1">
+				<div class="increaseBtn"></div>
+			</div>
+			<div>
+				Opacity  <span id="opacityVal"></span>
+				<div class="opacity box"></div>
+				<div class="decreaseBtn"></div>
+				<input id="opacityRange" type="range" min="0" max="100" step="1">
+				<div class="increaseBtn"></div>
+			</div>
+			<div>
+				Brightness  <span id="brightnessVal"></span>
+				<div class="brightness box"></div>
+				<div class="decreaseBtn"></div>
+				<input id="brightnessRange" type="range" min="0" max="500" step="1">
+				<div class="increaseBtn"></div>
+			</div>
+			<div>
+				contrast  <span id="contrastVal"></span>
+				<div class="contrast box"></div>
+				<div class="decreaseBtn"></div>
+				<input id="contrastRange" type="range" min="0" max="700" step="1">
+				<div class="increaseBtn"></div>
+			</div>
+		</div>
+		<div class="">
+		<img id="picturePreview" class="right col-" src="./newpic_files/myPIC.jpg" alt="myPic" width="" height="" style="filter: hue-rotate(316deg) saturate(456%);">
+			
+		</div>
+	</div>
+
+	
+
+	<br>
+	<br>
+
+	<form class="right" name="filePost" method="post" enctype="multipart/form-data">
+		file <input name="file" type="file" multiple="">
+		submit <input type="submit" name="uploadFile" value="submit">
+	</form>
+
+
+<form action="http://localhost:3333/index" method="" enctype="multipart/form-data">
+	what do you like to upload <input type="file" id="previewImgInput" multiple="" onchange="handleFiles(this.files)">
+</form>
+<img src="./newpic_files/myPIC.jpg" hright="100" width="100" alt="" class="uploadPreview">
+
+
+	<script src="./newpic_files/jquery.js"></script>
+	<script src="./newpic_files/touchSlide.js"></script>
+<script>
+var selectionArray=[];
+function createSelectionDiv(idNumber){
+	$('body').append('<div class="selectionDiv" id="selectionDiv'+idNumber+'"></div>')
+}
+var mousedown=false;
+var dragStart = false
+
+$("#picturePreview").on('click', function(e){
+	// console.log(e.preventDefault())
+	console.log(e);
+	console.log('CLICK');
+	// $('#picturePreview').off('dragstart')
+	// $('#picturePreview').off('dragend')
+	// $('#picturePreview').off('drag')
+	$('#selectionDiv'+selectionArray.length).remove()
+	// $('#picturePreview').off('mousemove')
+	var mousedown = false
+
+})
+
+// $('#picturePreview').on('drag', function(e){
+// 	console.log('drag');
+// 	console.log(e);
+// })
+// $('#picturePreview').on('dragover', function(e){
+// 	console.log('dragover');
+// 	console.log(e);
+// })
+// $('#picturePreview').on('dragstart', function(e){
+// 	console.log('dragstart');
+// console.log(e);
+// })
+// $('#picturePreview').on('dragend', function(e){
+// 	console.log('dragend');
+// console.log(e);
+// })
+// $('#picturePreview').on('mouseup', function(e){
+// 	console.log('mouseup');
+// console.log(e);
+// })
+// $('#picturePreview').on('mousedown', function(e){
+// 	console.log('mousedown');
+// console.log(e);
+// })
+$('#picturePreview').on('mousedown', function(e){
+	console.log('EVENT ');
+	console.log(e);
+
+	console.log('mousedown Event');
+	var initialClick = {
+		xPOS: parseInt(e.pageX),
+		yPOS: parseInt(e.pageY)
+	}
+	var selectionDivNumber = selectionArray.length
+	createSelectionDiv(selectionDivNumber)
+	$('#selectionDiv'+selectionArray.length).css('top', initialClick.yPOS)
+	$('#selectionDiv'+selectionArray.length).css('left', initialClick.xPOS)
+	console.log('inital click ')
+	console.log(initialClick);
+	var mousedown = true
+	if(mousedown==true){
+		console.log('true mouse is down');
+		XYPOS = {};
+		var divWidth;
+		var divHeight;
+
+			$('#picturePreview').on('drag', function(){
+				// e.preventDefault()
+				dragStart = true
+
+				console.log('Drag Start'+dragStart);
+				})
+				$('#picturePreview').on('dragover', function(e){
+					if(dragStart === true){console.log('True Drag');
+				}else{console.log('False Drag');}
+
+				// console.log(e.offsetX);
+				// console.log(e.offsetY);
+				// console.log(e.clientY);
+				// console.log(e.clientY);
+				XYPOS ={
+					xPage:parseInt(e.pageX),
+					yPage:parseInt(e.pageY)
+				}
+
+				// console.log( XYPOS);
+				// console.log('Math equals initial X click at '+initialClick.xPOS);
+				// console.log('Math equals initial Y click at '+initialClick.yPOS);
+				// console.log('minus abs current X POS '+XYPOS.xPage);
+				// console.log('minus abs current Y POS '+XYPOS.yPage);
+				// console.log(XYPOS.xPage-initialClick.xPOS);
+				// console.log(XYPOS.yPage-initialClick.yPOS);
+				if(XYPOS.xPage > initialClick.xPOS){
+					divWidth = XYPOS.xPage-initialClick.xPOS					
+				}else{
+					$('#selectionDiv'+selectionArray.length).css('left', XYPOS.xPage)
+
+					divWidth = initialClick.xPOS-XYPOS.xPage
+				}
+				if(XYPOS.yPage>initialClick.yPOS){
+					divHeight = XYPOS.yPage-initialClick.yPOS					
+				}else{
+					$('#selectionDiv'+selectionArray.length).css('top', XYPOS.yPage)
+
+					divHeight = initialClick.yPOS-XYPOS.yPage
+
+				}
+				 $('#selectionDiv'+selectionArray.length).css('height', divHeight+'px')
+				 $('#selectionDiv'+selectionArray.length).css('width', divWidth+'px')
+			 })
+
+				 $('#picturePreview').on('dragend mouseup', function(e){
+				 	dragStart = false
+				 	$('#picturePreview').off('drag')
+				 	$('#picturePreview').off('dragend')
+				 	$('#picturePreview').off('dragover')
+				 	$('#picturePreview').off('dragstart')
+				 	console.log(e);
+				 	console.log('off mouse move event');
+				 		$('#picturePreview').off('mouseup')
+				 		console.log('take off mouse up event');
+				 		console.log('add object to selection array');
+				 		var divObj = {
+				 			width: divWidth,
+				 			height: divHeight
+				 		}
+				 		selectionArray.push(divObj)
+				 		console.log('Selection dive array length = '+selectionArray.length);
+
+				 
+				 })
+
+	
+
+			
+
+
+	}
+
+})
+
+// $('#picturePreview').on('dragend', function(e){
+// 	mousedown = false
+
+
+// $('#picturePreview').on('drop', function(e){
+// 	mousedown = false
+// 	$('#picturePreview').off('mousemove')
+// 	console.log(e);
+// 	console.log('DROP');
+// })
+
+
+$('.decreaseBtn').on('click', function(e){
+	var target = e.target
+	console.log(e);
+	console.log(target);
+	console.log(target.parentNode);
+	console.log(target.parentNode.children);
+	var children = target.parentNode.children
+	console.log(children.length);
+	for(var x = 0; x<children.length;x++){
+		if(children[x].localName==='input'){
+			console.log(children[x].id);
+		}
+	}
+})
+
+
+
+
+var filesArrayBlobs = []
+function handleFiles(files){
+	console.log(files);
+	for(var x = 0;x<files.length;x++){
+		filesArrayBlobs.push(window.URL.createObjectURL(files[x]))
+		$('body').append('<img class="uploadPreview" src="'+filesArrayBlobs[x]+'" height="100">')
+	}
+}
+var contrast,
+	brightness,
+	opacity,
+	invert,
+	hue,
+	saturate,
+	sepia,
+	grayScale,
+	blurr
+
+	var filterPropertiesObj=
+	{
+	contrast: function(){
+		var propValue = $('#contrastRange').val()},
+	brightness:function(){
+		return $('#brightnessRange').val()},
+	opacity:function(){
+		return $('#opacityRange').val()},
+	invert:function(){
+		return $('#invertRange').val()},
+	hue:function(){
+		return $('#hueRange').val()},
+	saturate:function(){
+		return $('#saturateRange').val()},
+	sepia:function(){
+		return $('#sepiaRange').val()},
+	grayScale:function(){
+		return $('#grayRange').val()},
+	blurr:function(){
+		return $('#blurRange').val()}
+	}
+	//drop-shadow
+
+var filterProperties=[]
+	// [contrast,
+	// brightness,
+	// opacity,
+	// invert,
+	// hue,
+	// saturate,
+	// sepia,
+	// sepia,
+	// blurr]
+
+
+$('#contrastRange').val(100)
+$('#contrastRange').on('change input', function(){
+	 contrast = $('#contrastRange').val()
+	$('.contrast').css('filter', 'contrast('+contrast+'%)')
+	$('#contrastVal').html(contrast)
+	contrast='contrast('+contrast+'%)'
+	filterProperties[0]=contrast
+
+})
+
+
+$('#brightnessRange').val(100)
+$('#brightnessRange').on('change input', function(){
+	var brightness = $('#brightnessRange').val()
+	$('.brightness').css('filter', 'brightness('+brightness+'%)')
+	$('#brightnessVal').html(brightness)
+	brightness='brightness('+brightness+'%)'
+	filterProperties[1]=brightness
+
+})
+
+$('#opacityRange').val(100)
+$('#opacityRange').on('change input', function(){
+	var opacity = $('#opacityRange').val()
+	$('.opacity').css('filter', 'opacity('+opacity+'%)')
+	$('#opacityVal').html(opacity)
+	opacity='opacity('+opacity+'%)'
+	filterProperties[2]=opacity
+
+})
+
+
+$('#invertRange').val(0)
+$('#invertRange').on('change input', function(){
+	var invert = $('#invertRange').val()
+	$('.invert').css('filter', 'invert('+invert+'%)')
+	$('#invertVal').html(invert)
+	invert='invert('+invert+'%)'
+	filterProperties[3]=invert
+
+})
+
+$('#hueRange').val(0)
+$('#hueRange').on('change input', function(){
+	var hue = $('#hueRange').val()
+	$('.hue').css('filter', 'hue-rotate('+hue+'deg)')
+	$('#hueVal').html(hue)
+	hue='hue-rotate('+hue+'deg)'
+	filterProperties[4]=hue
+
+})
+
+$('#saturateRange').val(0)
+$('#saturateRange').on('change input', function(){
+	var saturate = $('#saturateRange').val()
+	$('.saturate').css('filter', 'saturate('+saturate+'%)')
+	$('#saturateVal').html(saturate)
+	saturate='saturate('+saturate+'%)'
+	filterProperties[5]=saturate
+
+})
+
+$('#sepiaRange').val(0)
+$('#sepiaRange').on('change input', function(){
+	var sepia = $('#sepiaRange').val()
+	$('.sepia').css('filter', 'sepia('+sepia+'%)')
+	$('#sepiaVal').html(sepia)
+	sepia='sepia('+sepia+'%)'
+	filterProperties[6]=sepia
+
+})
+
+$('#grayRange').val(0)
+$('#grayRange').on('change input', function(){
+	var grayScale = $('#grayRange').val()
+	$('.grayScale').css('filter', 'grayscale('+grayScale+'%)')
+	$('#grayVal').html(grayScale)
+	grayScale='grayscale('+grayScale+'%)'
+	filterProperties[7]=grayScale
+
+})
+
+
+$('#blurRange').val(0)
+$('#blurRange').on('change input', function(){
+	var blurr = $('#blurRange').val()
+	$('.blur').css('filter', 'blur('+blurr+'px)')
+	$('#blurVal').html(blurr)
+	blurr='blur('+blurr+'px)'
+	filterProperties[8]=blurr
+
+	// $('.LED').animate({
+	// 	filter:'blur('+200+'px)',
+	// 	height:100
+	// }, 500, function(){
+	// 	console.log('Animatiuon!');
+	// })
+
+})
+
+$('input[type="range"]').on('change input', function(){
+	var tags ='';
+	for(var x = 0; x<filterProperties.length;x++){
+	if(typeof filterProperties[x]!=='undefined'){
+	  tags += filterProperties[x]
+	  }  
+	}
+	$('#picturePreview').css('filter', tags)
+	console.log(tags);
+})
+
+
+
+
+
+
+
+	$('form[name = filePost]').submit(function(e){
+		// e.preventDefault()
+		console.log('Form submit files are....');
+$.post('/index', function(data){
+	console.log(data);
+})
+
+
+		var formData = new FormData($(this)[0])
+		console.log(formData);
+
+		
+
+
+
+	})
+</script>
+
+<div class="selectionDiv" id="selectionDiv0" style="top: 180px; left: 381px;"></div><div class="selectionDiv" id="selectionDiv0"></div><div class="selectionDiv" id="selectionDiv2" style="top: 150px; left: 444px;"></div><div class="selectionDiv" id="selectionDiv3" style="top: 127px; left: 541px;"></div><div class="selectionDiv" id="selectionDiv3"></div><div class="selectionDiv" id="selectionDiv3"></div><div class="selectionDiv" id="selectionDiv6" style="top: 163px; left: 549px;"></div><div class="selectionDiv" id="selectionDiv7" style="top: 144px; left: 627px;"></div><div class="selectionDiv" id="selectionDiv7"></div><div class="selectionDiv" id="selectionDiv7"></div><div class="selectionDiv" id="selectionDiv10" style="top: 103px; left: 591px;"></div><div class="selectionDiv" id="selectionDiv11" style="top: 111px; left: 490px;"></div><div class="selectionDiv" id="selectionDiv11"></div><div class="selectionDiv" id="selectionDiv13" style="top: 116px; left: 443px;"></div><div class="selectionDiv" id="selectionDiv14" style="top: 121px; left: 391px;"></div><div class="selectionDiv" id="selectionDiv15" style="top: 148px; left: 312px;"></div><div class="selectionDiv" id="selectionDiv15"></div><div class="selectionDiv" id="selectionDiv15"></div><div class="selectionDiv" id="selectionDiv18" style="top: 160px; left: 280px;"></div><div class="selectionDiv" id="selectionDiv19" style="top: 153px; left: 377px;"></div><div class="selectionDiv" id="selectionDiv19"></div><div class="selectionDiv" id="selectionDiv19"></div><div class="selectionDiv" id="selectionDiv19"></div><div class="selectionDiv" id="selectionDiv19"></div><div class="selectionDiv" id="selectionDiv19"></div><div class="selectionDiv" id="selectionDiv19"></div><div class="selectionDiv" id="selectionDiv26" style="top: 185px; left: 416px;"></div><div class="selectionDiv" id="selectionDiv27" style="top: 212px; left: 479px;"></div><div class="selectionDiv" id="selectionDiv28" style="top: 197px; left: 550px;"></div><div class="selectionDiv" id="selectionDiv29" style="top: 201px; left: 606px;"></div><div class="selectionDiv" id="selectionDiv30" style="top: 136px; left: 673px;"></div><div class="selectionDiv" id="selectionDiv31" style="top: 101px; left: 676px;"></div><div class="selectionDiv" id="selectionDiv32" style="top: 93px; left: 313px;"></div><div class="selectionDiv" id="selectionDiv32"></div><div class="selectionDiv" id="selectionDiv34" style="top: 94px; left: 338px;"></div><div class="selectionDiv" id="selectionDiv35" style="top: 84px; left: 226px;"></div><div class="selectionDiv" id="selectionDiv35"></div><div class="selectionDiv" id="selectionDiv35"></div><div class="selectionDiv" id="selectionDiv38" style="top: 181px; left: 509px;"></div><div class="selectionDiv" id="selectionDiv38"></div><div class="selectionDiv" id="selectionDiv40" style="top: 222px; left: 605px;"></div><div class="selectionDiv" id="selectionDiv40"></div><div class="selectionDiv" id="selectionDiv40"></div><div class="selectionDiv" id="selectionDiv40"></div><div class="selectionDiv" id="selectionDiv40"></div></body></html>
